@@ -1,6 +1,6 @@
 {% extends 'home.html'%}
 {%block home%}
-<h1 class="bg-warning text-center">Login </h1>
+<h1 class="p-3 mb-2 bg-light text-dark text-center">Login </h1>
 {% if messages %}
 {% for msg in messages %}
  {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
@@ -20,7 +20,7 @@
 {% endif %} 
 <form action="" method="post" class="text-center">
     {%csrf_token%}
-   <table class="table table-dark">
+    <table class="table table-hover table-dark">
         {{form.as_table}}
     <tr><td colspan="2"><button class="btn btn-warning">Login</button></td></tr>
     </table>

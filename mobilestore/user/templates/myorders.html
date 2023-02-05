@@ -1,0 +1,13 @@
+{% extends 'uhome.html'%}
+{%block user%}
+<h3 class="bg-success  display-6 text-center">My order</h3>
+<div>
+
+  {% for i in data %}
+ 
+  <!-- {% if c.user.id == i.id %} -->
+  <ul class="list-group"> <li class="list-group-item"><b>{{i.product_id}}</b></li></ul>
+  {%endif%}
+ 
+  {%endfor%}
+{%endblock user%}

@@ -127,11 +127,3 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL='account.User'
 
-#
-# Mail CONFIGURATION
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'aishuvivek2002@gmail.com'
-EMAIL_HOST_PASSWORD = 'ridislhfxbmosgtl'

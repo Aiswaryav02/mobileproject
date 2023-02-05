@@ -1,0 +1,10 @@
+{% extends 'uhome.html'%}
+{%block user%}
+<h3 class="bg-success  display-6 text-center">My Purchase</h3>
+<div>
+{%for i in data %}
+<div class="card mt-3">
+  <p class="text-right">}</b>{{i.product.model}}{{i.quantity}}</p>
+  
+{%endfor%}
+{%endblock user%}
