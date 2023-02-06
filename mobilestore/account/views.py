@@ -29,7 +29,7 @@ def post(self,request,*args,**kwargs):
 
 class LoginView(FormView):
     form_class=LoginForm
-    template_name='login.html'
+    template_name='logiii.html'
     def post(self,req):
             un=req.POST.get('username')
             pw=req.POST.get('password')
