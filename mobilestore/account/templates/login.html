@@ -1,6 +1,42 @@
 {% extends 'home.html'%}
 {%block home%}
-<h1 class="p-3 mb-2 bg-light text-dark text-center">Login </h1>
+<style>
+  *{
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      color:black;
+  }
+  h1{
+      color: black;
+      text-transform: uppercase;
+  }
+  strong{
+      color: white;
+  }
+  form{
+      background-color:white;
+  }
+  .btn{
+      background-color: #0381fe;
+      border-color: #0381fe;
+      color: white;
+      height: 40px;
+      width: 150px;
+      border-radius: 20px;
+      margin-right:10px;
+  }
+  table{
+      color: white;
+  }
+  td{
+    color: white;
+  }
+ table,td,tr{
+  border: none;
+ }
+</style>
+<body  style="background: white;">
+<div class="vh-1000 bg-image" >
+<h1 class="p-3 mb-2  text-center">Login </h1>
 {% if messages %}
 {% for msg in messages %}
  {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
@@ -20,9 +56,10 @@
 {% endif %} 
 <form action="" method="post" class="text-center">
     {%csrf_token%}
-    <table class="table table-hover table-dark">
+    <table class="table table-hover ">
         {{form.as_table}}
     <tr><td colspan="2"><button class="btn btn-warning">Login</button></td></tr>
     </table>
 </form>
+</body>
 {%endblock home%}

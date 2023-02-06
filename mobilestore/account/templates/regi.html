@@ -1,32 +1,32 @@
-<section class="testimonial py-5" id="testimonial">
-    <div class="container">
-        <div class="row ">
-            <div class="col-md-4 py-5 bg-primary text-white text-center ">
-                <div class=" ">
-                    <div class="card-body">
-                        <img src="http://www.ansonika.com/mavia/img/registration_bg.svg" style="width:30%">
-                        <h2 class="py-3">Registration</h2>
-                        <p>Mobile
+{% extends 'home.html'%}
+{% load static%}
+{%block home%}  
+  <center>
+    <h1 style="font-family: cursive; text-align:center;">Register</h1>
+  <body>
+  {% if messages %}
+  {% for msg in messages %}
+  {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
 
-</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 py-5 border">
-                <h4 class="pb-4">Please fill with your details</h4>
-                <form action="" method="post">
-                    {% csrf_token %}
-                        
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            {{form.as_p}}
-                    </div>
-                    
-                    <div class="form-row">
-                        <button type="button" class="btn btn-danger">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+  <div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>{{msg}}</strong>
+  </div>
+  {%endif%}
+  {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+  <div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>{{msg}}</strong>
+  </div>
+  {%endif%}
+  {% endfor %}
+  {% endif %}
+  <form  action="" method="post">
+    {% csrf_token %}
+        {{form.as_p}}
+        <p><button class="btn btn-success">Register</button></p>
+    
+  </form>
+</body>
+  </center>
+  {%endblock home%}

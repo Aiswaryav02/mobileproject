@@ -5,14 +5,25 @@ from .forms import StoreForm,Productform
 from .models import Products
 from account.models import User
 from django.contrib import messages
+from django.utils.decorators import method_decorator
 # Create your views here.
+def signin_required(fn):
+    def wrapper(req,*args,**kwargs):
+        if req.user.is_authenticated:
+            return fn(req,*args,*kwargs)
+        else:
+            return redirect('logi')
+    return wrapper
 
+
+@method_decorator(signin_required,name="dispatch")
 class StoreHome(CreateView):
     template_name="storehome.html"
     model=User
     form_class=StoreForm
     success_url=reverse_lazy('hme')
 
+@method_decorator(signin_required,name="dispatch")
 class AddproView(CreateView):
     template_name='addproducts.html'
     model=Products
@@ -27,6 +38,9 @@ def post(self,request,*args,**kwargs):
             messages.error(request, "Failed") 
             return render(request, "addproducts.html", {'form': form_data})
         
+
+
+@method_decorator(signin_required,name="dispatch")      
 class ProduView(View):
 
     def get(self,request):
@@ -41,6 +55,7 @@ class DeletePROD(View):
         item.delete()
         return redirect('editprod')
     
+ 
 class EditProd(View):
     def get(self,request,*args,**kwargs):
         d_id=kwargs.get("did")

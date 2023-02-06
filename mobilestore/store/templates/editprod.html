@@ -1,6 +1,6 @@
 {% extends 'storehome.html'%}
 {%block store%}
-    <h2>Products</h2>
+    <h2 class=" text-dark text-center">Products</h2>
 
     <div class="card-columns">
         {%for i in data%}
@@ -9,8 +9,8 @@
             <img class="card-img-top" src="{{i.prodimg.url}}" alt="card-img">
             {%endif%}
             <div class="card-body">
-                <h4 class="card-title">{{i.productname}}</h4>
-                <p class="card-text">Model :<b>{{i.productmodel}}</b></p>
+                <h4 class="card-title">{{i.productname}}  {{i.productmodel}}</h4>
+                <!-- <p class="card-text">Model :<b>{{i.productmodel}}</b></p> -->
                 <p class="card-text">Description :<b>{{i.description}}</b></p>
                 <p class="card-text">Quantity :<b>{{i.quantity}}</b></p>
                 <p class="card-text">Color :<b>{{i.color}}</b></p>

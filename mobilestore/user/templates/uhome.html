@@ -28,11 +28,11 @@
     
     <li class="nav-item"><a href="{% url 'prodview' %}" class="nav-link btn btn-outline-warning">View Products</a></li>
     <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link btn btn-outline-danger">Logout</a></li>
-    <li class="nav-item"><a href="{% url 'myorder' %}" class="nav-link btn btn-outline-danger">myorder</a></li>
+    <li class="nav-item"><a href="{% url 'myorder' %}" class="nav-link btn btn-outline-light">My Orders</a></li>
   </ul>
 </nav>
 
-<body>
+<body >
   {%block user%}
   {% if messages %}
   {% for msg in messages %}
@@ -51,8 +51,8 @@
   {%endif%}
   {% endfor %}
   {% endif %}
-  <h3 class=" display-6 text-center">User Home</h3>
-  <p> Welcome<b><i></i> {{request.user.first_name}} {{request.user.last_name}} !</i></b></p>
+  <h3 class=" text-dark display-6 text-center">User Home</h3>
+  <p > Welcome<b><i></i> {{request.user.first_name}} {{request.user.last_name}} !</i></b></p>
   <!-- <a href="{% url 'prodview' %}" class="btn btn-outline-success">products</a> -->
   
 </body>

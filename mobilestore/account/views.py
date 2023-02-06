@@ -9,15 +9,24 @@ from django.contrib.auth import authenticate,login,logout
 
 
 class Home(TemplateView):
-    template_name="home.html"
+    template_name="home2.html"
 
 
 class UserRegView(CreateView):
-    template_name='reg.html'
+    template_name='regi.html'
     model=User
     form_class=UserRegForm
     success_url=reverse_lazy('home')
-    
+def post(self,request,*args,**kwargs):
+    form_data=self.form_class(request.POST)
+    if form_data.is_valid():
+        messages.success(request,"Registered!!!")
+        return redirect('home')
+    else:
+        messages.error(request,"Failed!!")
+        return render(request,"reg.html",{'form':form_data})
+
+
 class LoginView(FormView):
     form_class=LoginForm
     template_name='login.html'

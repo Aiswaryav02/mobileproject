@@ -1,13 +1,30 @@
 {% extends 'uhome.html'%}
 {%block user%}
-<h3 class="bg-success  display-6 text-center">My order</h3>
+<h3 class="display-6 text-dark text-center">My Orders</h3>
 <div>
+<!-- <h3>hello</h3> -->
+<div class="card-columns">
+  {%for i in data%}
+  <div class="card" style="width:300px">
+      {%if i.product.prodimg%}
+      <img class="card-img-top" src="{{i.product.prodimg.url}}" alt="card-img">
+      {%endif%}
+  <div class="card-body">
+    <!-- <p class="text-left"> -->
+     <!-- <b> {{i.product.productname}}{{i.product.productmodel}}</b></p> -->
+    <h3 class="card-title text-left"> <b> {{i.product.productname}}{{i.product.productmodel}}</b></h3>
+    <div class="card-content">{{i.product.description}}
+    </div>
+    <p>Ordered On :<b> {{i.date}}</b></p>
+  </div> 
+  </div>
+<!-- {{i.product.productname}}{{i.product.productmodel}}<br>
+{{i.product.price}}<br>
+{{i.date}}<br><br> -->
 
-  {% for i in data %}
- 
-  <!-- {% if c.user.id == i.id %} -->
-  <ul class="list-group"> <li class="list-group-item"><b>{{i.product_id}}</b></li></ul>
-  {%endif%}
- 
-  {%endfor%}
+{%endfor%}
 {%endblock user%}
+
+
+
+

@@ -18,11 +18,11 @@ class MyOrders(models.Model):
         date=models.DateField(null=True,auto_now_add=True)
         status=models.BooleanField(default=False)
 
-# class FeedbackModel(models.Model):
-#       date=models.DateField(null=True,auto_now_add=True)
-#       feedback=models.TextField()
-#       user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='userfb')
-#       product=models.ForeignKey(Products,on_delete=models.CASCADE,related_name="item1")
+class FeedbackModel(models.Model):
+      date=models.DateField(null=True,auto_now_add=True)
+      feedback=models.TextField()
+      user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='userfb')
+      product=models.ForeignKey(Products,on_delete=models.CASCADE,related_name="item1")
       
 
 

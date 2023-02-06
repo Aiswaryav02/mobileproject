@@ -1,21 +1,31 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.views.generic import View,CreateView,TemplateView
 from django.urls import reverse_lazy
-from .forms import UserForm
+from .forms import UserForm,FeedbackForm
+from django.utils.decorators import method_decorator
 from django.contrib import messages
 from account.models import User
 from store.models import Products
-from .models import MyOrders
+from .models import MyOrders,FeedbackModel
 from store.forms import Productform
 # Create your views here.
+# decorators
+def signin_required(fn):
+    def wrapper(req,*args,**kwargs):
+        if req.user.is_authenticated:
+            return fn(req,*args,*kwargs)
+        else:
+            return redirect('logi')
+    return wrapper
 
+@method_decorator(signin_required,name="dispatch")
 class UserHome(CreateView):
     template_name="uhome.html"
     model=User
     form_class=UserForm
     success_url=reverse_lazy('hme')
 
-
+@method_decorator(signin_required,name="dispatch")
 class ProductView(View):
     model=Products
     form_class=Productform
@@ -25,16 +35,7 @@ class ProductView(View):
         prod=Products.objects.all()
         return render(request,"prod.html",{'data':prod})
     
-# class PurchaseView(View):
-#     template_name="purchases.html"
-#     def get_context_data(self, **kwargs):
-#             context = super().get_context_data(**kwargs)
-#             prod=Products.objects.filter(product=self.request.user)
-#             context['data']=prod
-#             context['purch']=Purchase.objects.all()
-#             return context
-    
-#     model=Products
+
 
 
 
@@ -94,41 +95,6 @@ class ProductView(View):
 #         return context
 
 
-# def purch(request,*args,**kwargs):?????
-#         print("hi")
-#         if request.method=='POST':
-#             cmnt=request.POST.get('product')
-#             user=request.user
-#             p_id=kwargs.get('id')
-#             blog=Purchase.objects.get(id=p_id)
-#             Purchase.objects.create(product=cmnt,user=user,blog=blog)
-#             messages.success(request,"purchased added")
-#             return redirect('purch')????
-
-
-# def purchas(request,*args,**kwargs):
-       
-#         if request.method=='POST':
-#             cmnt=request.POST.get('quantity')
-#             user=request.user
-#             b_id=kwargs.get('id')
-#             blog=BlogModel.objects.get(id=b_id)
-#             CommentModel.objects.create(comment=cmnt,user=user,blog=blog)
-#             messages.success(request,"comment added")
-#             return redirect('hme')
-        
-# class Viewmypurch(View):
-#     def get(self,request):
-#         dept=Purchase.objects.all()
-#         return render(request,"purchases.html",{'data':dept})
-# class Orders(TemplateView):
-#         template_name="myorders.html"
-#         def get_context_data(self, **kwargs):
-#             context = super().get_context_data(**kwargs)
-#             order=MyOrders.objects.filter(user1=self.request.user)
-#             context['data']=order
-#             context['product']=Products.objects.all()
-#             return context
         
 # class Orders(CreateView):?????
     # def get(self,req,*args,**kwargs):
@@ -152,67 +118,20 @@ class ProductView(View):
     #     context['product']=MyOrders.objects.all()
     #     return context????/
 
-# def my_order(request,*args,**kwargs):
-#         print("hi")
-#         if request.method=='POST':
-#             orde=request.POST.get('product')
-#             user=request.user
-#             b_id=kwargs.get('id')
-#             blog=Products.objects.get(id=b_id)
-#             MyOrders.objects.create(product=orde,user=user,model=blog)
-#             messages.success(request,"ordered")
-#             return redirect('orders')
-
-
-# class OrdrView(CreateView): ?????
-#     model=MyOrders
-#     form_class=PurchaseForm
-#     template_name="prod.html"
-#     success_url=reverse_lazy('orders')????
-    # def post(self,request,*args,**kwargs):
-    #         form_data=PurchaseForm(request.POST)
-    #         if form_data.is_valid():
-    #             form_data.save()
-    #             messages.success(request,"ordered")
-    #             return redirect('myorder')
-    #         else:
-    #             messages.error(request,"failed")
-    #             return redirect('prod')
-            
-
-        # def get(self,request,*args,**kwargs):
-        #     prod=MyOrders.objects.filter(user_id=request.user.user_id)
-        #     context['data']=prod
-        #     context['cmnts']=Products.objects.all()
-        #     return context
         
 
 
 
-class Myorderview(TemplateView):
-    template_name="myorders.html"
-    def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            order=MyOrders.objects.filter(user=self.request.user).order_by('-date')
-            context['data']=order
-            return context
-
-
-    # def get(self,request,*args,**kwargs):
-    #     d_id=kwargs.get("did")
-    #     prod=MyOrders.objects.get(id=d_id)
-    #     form=PurchaseForm(instance=mng)
-    #     return render(request,"myorders.html",{'data':prod})
-# def getorder(self,request,*args,**kwargs):
-#     product_id=kwargs.get('pid')
-#     user=request.user
-#     blog=MyOrders.objects.get(id=product_id)
-#     blog.liked_by.add(user)
-#     blog.save()
-#     return redirect('hme')
+# class Myorderview(View):
+#         def get(self,request,*args,**kwargs):
+#             order=MyOrders.objects.filter(user_id=self.request.user)
+#             return render(request,"myorders.html",{'data':order})
+           
 
 
 
+
+# @method_decorator(signin_required,name="dispatch")
 # class OrderCreateVIew(View):
 #     def get(self,request,*args,**kwargs):
 #         user=request.user
@@ -222,32 +141,83 @@ class Myorderview(TemplateView):
 #         messages.success(request,"ordered succesfully")
 #         return redirect('uhm')
          
-#     def post(self,request,*args,**kwargs):
-#         product_id=kwargs.get('pid')
-#         MyOrders.objects.create(pid=product_id,user=request.user)
-#         messages.success(request,"Purchased")
-#         return redirect('uhm')
-    
-# def order(request,*args,**kwargs):
-#     if request.method=='POST':
-#             user=request.user
-#             p_id=kwargs.get('id')
-#             product=Products.objects.get(id=p_id)
-#             MyOrders.objects.create(user=user,item=product)
-#             messages.success(request,"ordered succesfully")
-#             return redirect('uhm')
-# class Myblog(TemplateView):
-#         template_name="myblogs.html"
-#         def get_context_data(self, **kwargs):
-#             context = super().get_context_data(**kwargs)
-#             blog=.objects.filter(author=self.request.user)
-#             context['data']=blog
-#             context['cmnts']=CommentModel.objects.all()
-#             return context
-
-
-# class FeedbackCreateView(CreateView):
+@method_decorator(signin_required,name="dispatch")
+class Myorderview(TemplateView):
+        template_name="myorders.html"
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            order=MyOrders.objects.filter(user_id=self.request.user)
+            context['data']=order
+            # context['cmnts']=CommentModel.objects.all()
+            return context
+# def feedback(request,*args,**kwargs):
+# class FeedbackView(CreateView):
 #     model = FeedbackModel
 #     form_class=FeedbackForm
-#     template_name="feedback.html"
-#     success_url=reverse_lazy('prodview')
+#     template_name="feedbach.html"
+#     success_url=reverse_lazy('uhm')
+#     def post(self,request,*args,**kwargs):
+        
+        # print("hi")
+        # if request.method=='POST':
+            # fb=request.POST.get('feedback')
+            # user=request.user
+            # f_id=kwargs.get('id')
+            # prod=Products.objects.get(id=f_id)
+            # FeedbackModel.objects.create(feedback=fb,user=user,product=prod)
+            # messages.success(request,"fb added")
+            # return redirect('hme')
+
+
+class FeedbackView(CreateView):
+    model = FeedbackModel
+    form_class=FeedbackForm
+    template_name="feedbach.html"
+    success_url=reverse_lazy('uhm')
+    def post(self,request,*args,**kwargs):
+        form_data=self.form_class(request.POST)
+        if form_data.is_valid(): 
+            fb=form_data.cleaned_data.get('feedback')
+            user=request.user
+            f_id=kwargs.get('id')
+            prod=Products.objects.get(id=f_id)
+            FeedbackModel.objects.create(feedback=fb,user=user,product=prod)
+            messages.success(request, "feedback added!!!")
+            return redirect('uhm')
+        else:
+            messages.error(request, "Failed") 
+            return render(request, "feedbach.html", {'form': form_data})
+    # def get(self,request,*args,**kwargs):
+        
+
+        # user=request.user
+        # f_id=kwargs.get('id')
+        # product=Products.objects.get(id=f_id)
+        # FeedbackModel.objects.create(user=user,product=product,)
+        # messages.success(request,"succesfully")
+        # return redirect('myorder')
+    
+        # if request.method=='POST':
+        #     fb=request.POST.get('feedback')
+        #     user=request.user
+        #     f_id=kwargs.get('id')
+        #     product=Products.objects.get(id=f_id)
+        #     FeedbackModel.objects.create(user=user,product=product)
+        #     messages.success(request,"succesfully")
+        #     return redirect('myorder')
+        
+
+
+# class AddproView(CreateView):
+#     template_name='addproducts.html'
+#     model=Products
+#     form_class=Productform
+#     success_url=reverse_lazy('editprod')
+# def post(self,request,*args,**kwargs):
+#         form_data=self.form_class(request.POST)
+#         if form_data.is_valid(): 
+#             messages.success(request, "Product added!!!")
+#             return redirect('editprod')
+#         else:
+#             messages.error(request, "Failed") 
+#             return render(request, "addproducts.html", {'form': form_data})
