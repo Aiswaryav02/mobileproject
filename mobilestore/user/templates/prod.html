@@ -17,7 +17,8 @@
                 <p class="card-text">Color :<b>{{i.color}}</b></p>
 
                 <p class="card-text">Price :<b>{{i.price}}</b></p>
-                 <a href="{% url 'order' i.id %}" class="btn btn-primary">Buy now</a> 
+                 <a href="{% url 'buynow' i.id %}" class="btn btn-primary">Buy now</a> 
+                 <a href="{% url 'addcart' i.id %}" class="btn btn-primary">Add to Cart</a> 
                  <a href="{% url 'fb' i.id %}" class="btn btn-warning">Give Feedback</a> 
             </div>
         </div>

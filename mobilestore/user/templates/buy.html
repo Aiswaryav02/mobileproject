@@ -1,0 +1,17 @@
+{% extends 'uhome.html'%}
+{%block user%}
+
+<div>
+<h3>Buy Now</h3>
+
+  <form action="" method="post">
+    {%csrf_token%}
+    <label for="">  Quantity</label>
+    <input type="number" name="quantity" required placeholder="Enter Quantity" value="1"><br>
+    <button class="btn-outline-info">Order Now</button>
+</form>
+
+
+
+{%endblock user%}
+

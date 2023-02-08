@@ -16,7 +16,9 @@ class MyOrders(models.Model):
         product=models.ForeignKey(Products,on_delete=models.CASCADE,related_name="item")
         user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user1")
         date=models.DateField(null=True,auto_now_add=True)
-        status=models.BooleanField(default=False)
+        status=models.CharField(max_length=100)
+        quantity=models.IntegerField(default=1)
+
 
 class FeedbackModel(models.Model):
       date=models.DateField(null=True,auto_now_add=True)

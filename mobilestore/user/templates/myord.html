@@ -1,0 +1,12 @@
+{% extends 'uhome.html'%}
+{%block user%}
+<p>Product:<b>{{data.product.productname}}{{data.product.productmodel}}</b></p>
+<p>Product:<b>{{data.product.price}}</b></p>
+<p>Product:<b>{{data.product.description}}</b></p>
+<form action="" method="post">
+    {%csrf_token%}
+    <label for="">  Quantity</label>
+    <input type="number" name="quantity" required placeholder="Enter Quantity" value="1"><br>
+    <button class="btn-outline-info">Order Now</button>
+</form>
+{%endblock user%}

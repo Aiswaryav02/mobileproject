@@ -13,7 +13,7 @@ class Home(TemplateView):
 
 
 class UserRegView(CreateView):
-    template_name='regi.html'
+    template_name='reg.html'
     model=User
     form_class=UserRegForm
     success_url=reverse_lazy('home')
@@ -29,7 +29,7 @@ def post(self,request,*args,**kwargs):
 
 class LoginView(FormView):
     form_class=LoginForm
-    template_name='logiii.html'
+    template_name='login.html'
     def post(self,req):
             un=req.POST.get('username')
             pw=req.POST.get('password')
